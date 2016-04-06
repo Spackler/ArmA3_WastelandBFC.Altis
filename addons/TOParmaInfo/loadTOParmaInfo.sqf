@@ -26,11 +26,11 @@ _generalInfoString = "Website: <t color='#0091CD'><a href='http://bravofoxtrotco
 _generalInfoText ctrlSetStructuredText parseText _generalInfoString;
 
 
-_rulesOnline = "http://bravofoxtrotcompany.com/r/" + _uid + "/r.html";
+_rulesOnline = "http://bravofoxtrotcompany.com";
 _rulesOffline = "addons\TOParmaInfo\rules.html";
-_newsOnline = "http://bravofoxtrotcompany.com/n/" + _uid + "/n.html";
+_newsOnline = "http://bravofoxtrotcompany.com";
 _newsOffline = "addons\TOParmaInfo\news.html";
-_statsOnline = "http://bravofoxtrotcompany.com/s/" + _uid + "/s.html";
+_statsOnline = "http://bravofoxtrotcompany.com";
 _statsOffline = "addons\TOParmaInfo\stats.html";
 
 
