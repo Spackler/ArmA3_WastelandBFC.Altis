@@ -1,5 +1,5 @@
 respawn="BASE";
-respawnDelay=10;
+respawnDelay=15;
 disabledAI=1;
 disableChannels[] = {2}; // {0} to disable global, {2} for command channel
 joinUnassigned = 0;
