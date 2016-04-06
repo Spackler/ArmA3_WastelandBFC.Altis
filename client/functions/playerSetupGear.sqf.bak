@@ -1,0 +1,724 @@
+//	@file Name: playerSetupGear.sqf
+//	@file Author: [GoT] JoSchaap, AgentRev
+
+private ["_player", "_uniform", "_vest", "_headgear", "_goggles"];
+_player = _this;
+
+// Clothing is now defined in "client\functions\getDefaultClothing.sqf"
+
+_uniform = [_player, "uniform"] call getDefaultClothing;
+_vest = [_player, "vest"] call getDefaultClothing;
+_headgear = [_player, "headgear"] call getDefaultClothing;
+_goggles = [_player, "goggles"] call getDefaultClothing;
+
+//Remove all gear
+removeUniform player;
+removeVest player;
+removeHeadgear player;
+removeGoggles player;
+removeBackpackGlobal player;
+
+if (_uniform != "") then { _player addUniform _uniform };
+if (_vest != "") then { _player addVest _vest };
+if (_headgear != "") then { _player addHeadgear _headgear };
+if (_goggles != "") then { _player addGoggles _goggles };
+
+sleep 0.1;
+
+// Remove GPS
+_player unlinkItem "ItemGPS";
+
+// Remove radio
+//_player unlinkItem "ItemRadio";
+
+// Remove NVG
+if (hmd _player != "") then { _player unlinkItem hmd _player };
+
+// Add NVG
+_player linkItem "NVGoggles";
+
+_player addBackpack "B_AssaultPack_rgr";
+
+_player addMagazine "9Rnd_45ACP_Mag";
+_player addWeapon "hgun_ACPC2_F";
+_player addMagazine "9Rnd_45ACP_Mag";
+_player addMagazine "9Rnd_45ACP_Mag";
+_player addMagazine "9Rnd_45ACP_Mag";
+_player addItem "FirstAidKit";
+_player selectWeapon "hgun_ACPC2_F";
+
+switch (true) do
+{
+	case (["_medic_", typeOf _player] call fn_findString != -1):
+	{
+		_player removeItem "FirstAidKit";
+		_player addItem "Medikit";
+	};
+	case (["_engineer_", typeOf _player] call fn_findString != -1):
+	{
+		_player addItem "MineDetector";
+		_player addItem "Toolkit";
+	};
+	case (["_sniper_", typeOf _player] call fn_findString != -1):
+	{
+		_player addWeapon "Rangefinder";
+	};
+};
+
+if (_player == player) then
+{
+	thirstLevel = 100;
+	hungerLevel = 100;
+};
+/*
+//Player Level 1
+if ((getPlayerUID _player) in ["76561198050089421","76561198112511275","76561198067915447","76561198105998574","76561198157812544"]) then { 
+// "Remove existing items";
+removeAllWeapons _player;
+//removeAllItems _player;
+//removeAllAssignedItems _player;
+//removeUniform _player;
+//removeVest _player;
+removeBackpack _player;
+removeHeadgear _player;
+removeGoggles _player;
+
+// "Add containers";
+//_player forceAddUniform "U_B_CombatUniform_mcam_tshirt";
+//_player addItemToUniform "FirstAidKit";
+_player addHeadgear "H_Shemag_olive_hs";
+//_player addGoggles "G_Sport_Blackred";
+//_player addVest "V_PlateCarrierGL_rgr";
+_player addItemToVest "HandGrenade";
+//_player addItemToVest "O_IR_Grenade";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addBackpack "B_FieldPack_cbr";
+_player addItemToBackpack "Medikit";
+//_player addItemToBackpack "FirstAidKit";
+//_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+_player addItemToBackpack "9Rnd_45ACP_Mag";
+_player addItemToBackpack "9Rnd_45ACP_Mag";
+_player addItemToBackpack "9Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+
+// "Add weapons";
+//_player addWeapon "srifle_EBR_F";
+//_player addPrimaryWeaponItem "muzzle_snds_B";
+//_player addPrimaryWeaponItem "acc_flashlight";
+//_player addPrimaryWeaponItem "optic_MRCO";
+_player addWeapon "hgun_ACPC2_F";
+_player addHandgunItem "muzzle_snds_acp";
+
+// "Add items";
+//_player addItem "ItemMap";
+//_player addItem "ItemCompass";
+//_player addItem "ItemWatch";
+//_player addItem "ItemRadio";
+//_player addItem "Rangefinder";
+};
+
+//Player Level 2
+if ((getPlayerUID _player) in ["76561198121298195","76561198069537777","76561198031792285"]) then { 
+// "Remove existing items";
+removeAllWeapons _player;
+//removeAllItems _player;
+//removeAllAssignedItems _player;
+//removeUniform _player;
+//removeVest _player;
+removeBackpack _player;
+removeHeadgear _player;
+removeGoggles _player;
+
+// "Add containers";
+//_player forceAddUniform "U_B_CombatUniform_mcam_tshirt";
+//_player addItemToUniform "FirstAidKit";
+_player addHeadgear "H_Shemag_olive_hs";
+//_player addGoggles "G_Sport_Blackred";
+//_player addVest "V_PlateCarrierGL_rgr";
+_player addItemToVest "HandGrenade";
+//_player addItemToVest "O_IR_Grenade";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addBackpack "B_FieldPack_cbr";
+_player addItemToBackpack "Medikit";
+//_player addItemToBackpack "FirstAidKit";
+//_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+_player addItemToBackpack "30Rnd_9x21_Mag";
+_player addItemToBackpack "30Rnd_9x21_Mag";
+_player addItemToBackpack "30Rnd_9x21_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+
+// "Add weapons";
+_player addWeapon "hgun_PDW2000_Holo_F";
+_player addPrimaryWeaponItem "muzzle_snds_L";
+//_player addPrimaryWeaponItem "acc_flashlight";
+//_player addPrimaryWeaponItem "optic_MRCO";
+_player addWeapon "hgun_ACPC2_F";
+_player addHandgunItem "muzzle_snds_acp";
+
+// "Add items";
+//_player addItem "ItemMap";
+//_player addItem "ItemCompass";
+//_player addItem "ItemWatch";
+//_player addItem "ItemRadio";
+//_player addItem "Rangefinder";
+};
+
+//Player Level 3
+if ((getPlayerUID _player) in [""]) then { 
+// "Remove existing items";
+removeAllWeapons _player;
+//removeAllItems _player;
+//removeAllAssignedItems _player;
+//removeUniform _player;
+//removeVest _player;
+removeBackpack _player;
+removeHeadgear _player;
+removeGoggles _player;
+
+// "Add containers";
+//_player forceAddUniform "U_B_CombatUniform_mcam_tshirt";
+//_player addItemToUniform "FirstAidKit";
+_player addHeadgear "H_Shemag_olive_hs";
+//_player addGoggles "G_Sport_Blackred";
+//_player addVest "V_PlateCarrierGL_rgr";
+_player addItemToVest "HandGrenade";
+//_player addItemToVest "O_IR_Grenade";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addBackpack "B_FieldPack_cbr";
+_player addItemToBackpack "Medikit";
+//_player addItemToBackpack "FirstAidKit";
+//_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+_player addItemToBackpack "30Rnd_9x21_Mag";
+_player addItemToBackpack "30Rnd_9x21_Mag";
+_player addItemToBackpack "30Rnd_9x21_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+
+// "Add weapons";
+_player addWeapon "SMG_02_F";
+_player addPrimaryWeaponItem "muzzle_snds_L";
+//_player addPrimaryWeaponItem "acc_flashlight";
+_player addPrimaryWeaponItem "optic_Holosight_smg";
+_player addWeapon "hgun_ACPC2_F";
+_player addHandgunItem "muzzle_snds_acp";
+
+// "Add items";
+//_player addItem "ItemMap";
+//_player addItem "ItemCompass";
+_player addItem "Binocular";
+//_player addItem "ItemRadio";
+//_player addItem "Rangefinder";
+};
+
+//Player Level 4
+if ((getPlayerUID _player) in [""]) then { 
+// "Remove existing items";
+removeAllWeapons _player;
+//removeAllItems _player;
+//removeAllAssignedItems _player;
+//removeUniform _player;
+//removeVest _player;
+removeBackpack _player;
+removeHeadgear _player;
+removeGoggles _player;
+
+// "Add containers";
+//_player forceAddUniform "U_B_CombatUniform_mcam_tshirt";
+//_player addItemToUniform "FirstAidKit";
+_player addHeadgear "H_Booniehat_oli";
+//_player addGoggles "G_Sport_Blackred";
+//_player addVest "V_PlateCarrierGL_rgr";
+_player addItemToVest "HandGrenade";
+//_player addItemToVest "O_IR_Grenade";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addItemToVest "9Rnd_45ACP_Mag";
+_player addBackpack "B_FieldPack_cbr";
+_player addItemToBackpack "Medikit";
+//_player addItemToBackpack "FirstAidKit";
+_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+_player addItemToBackpack "30Rnd_9x21_Mag";
+_player addItemToBackpack "30Rnd_9x21_Mag";
+_player addItemToBackpack "30Rnd_9x21_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+
+// "Add weapons";
+_player addWeapon "SMG_02_F";
+_player addPrimaryWeaponItem "muzzle_snds_L";
+//_player addPrimaryWeaponItem "acc_flashlight";
+_player addPrimaryWeaponItem "optic_Holosight_smg";
+_player addWeapon "hgun_ACPC2_F";
+_player addHandgunItem "muzzle_snds_acp";
+
+// "Add items";
+//_player addItem "ItemMap";
+//_player addItem "ItemCompass";
+_player addItem "ItemGPS";
+_player addItem "Binocular";
+//_player addItem "Rangefinder";
+};
+
+//Player Level 5
+if ((getPlayerUID _player) in [""]) then { 
+// "Remove existing items";
+removeAllWeapons _player;
+//removeAllItems _player;
+//removeAllAssignedItems _player;
+//removeUniform _player;
+//removeVest _player;
+removeBackpack _player;
+removeHeadgear _player;
+removeGoggles _player;
+
+// "Add containers";
+//_player forceAddUniform "U_B_CombatUniform_mcam_tshirt";
+//_player addItemToUniform "FirstAidKit";
+_player addHeadgear "H_Booniehat_oli";
+//_player addGoggles "G_Sport_Blackred";
+//_player addVest "V_PlateCarrierGL_rgr";
+_player addItemToVest "HandGrenade";
+//_player addItemToVest "O_IR_Grenade";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addBackpack "B_TacticalPack_rgr";
+_player addItemToBackpack "Medikit";
+//_player addItemToBackpack "FirstAidKit";
+_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+_player addItemToBackpack "30Rnd_556x45_Stanag";
+_player addItemToBackpack "30Rnd_556x45_Stanag";
+_player addItemToBackpack "30Rnd_556x45_Stanag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+
+// "Add weapons";
+_player addWeapon "arifle_Mk20_F";
+//_player addPrimaryWeaponItem "muzzle_snds_L";
+//_player addPrimaryWeaponItem "acc_flashlight";
+_player addPrimaryWeaponItem "optic_Holosight_smg";
+_player addWeapon "hgun_Pistol_heavy_01_F";
+//_player addHandgunItem "muzzle_snds_acp";
+
+// "Add items";
+//_player addItem "ItemMap";
+//_player addItem "ItemCompass";
+//_player addItem "ItemWatch";
+_player addItem "ItemGPS";
+_player addItem "Binocular";
+};
+
+//Player Level 6
+if ((getPlayerUID _player) in [""]) then { 
+// "Remove existing items";
+removeAllWeapons _player;
+//removeAllItems _player;
+//removeAllAssignedItems _player;
+//removeUniform _player;
+//removeVest _player;
+removeBackpack _player;
+removeHeadgear _player;
+removeGoggles _player;
+
+// "Add containers";
+//_player forceAddUniform "U_B_CombatUniform_mcam_tshirt";
+//_player addItemToUniform "FirstAidKit";
+_player addHeadgear "H_HelmetB_light";
+//_player addGoggles "G_Sport_Blackred";
+_player addVest "V_BandollierB_oli";
+_player addItemToVest "HandGrenade";
+//_player addItemToVest "O_IR_Grenade";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addBackpack "B_TacticalPack_rgr";
+_player addItemToBackpack "Medikit";
+//_player addItemToBackpack "FirstAidKit";
+_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+_player addItemToBackpack "30Rnd_556x45_Stanag";
+_player addItemToBackpack "30Rnd_556x45_Stanag";
+_player addItemToBackpack "30Rnd_556x45_Stanag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+
+// "Add weapons";
+_player addWeapon "arifle_TRG20_F";
+//_player addPrimaryWeaponItem "muzzle_snds_L";
+//_player addPrimaryWeaponItem "acc_flashlight";
+_player addPrimaryWeaponItem "optic_Holosight_smg";
+_player addWeapon "hgun_Pistol_heavy_01_F";
+_player addHandgunItem "muzzle_snds_acp";
+
+// "Add items";
+//_player addItem "ItemMap";
+//_player addItem "ItemCompass";
+//_player addItem "ItemWatch";
+_player addItem "ItemGPS";
+_player addItem "Binocular";
+};
+
+//Player Level 7
+if ((getPlayerUID _player) in [""]) then { 
+// "Remove existing items";
+removeAllWeapons _player;
+//removeAllItems _player;
+//removeAllAssignedItems _player;
+//removeUniform _player;
+//removeVest _player;
+removeBackpack _player;
+removeHeadgear _player;
+removeGoggles _player;
+
+// "Add containers";
+//_player forceAddUniform "U_B_CombatUniform_mcam_tshirt";
+//_player addItemToUniform "FirstAidKit";
+_player addHeadgear "H_HelmetB";
+//_player addGoggles "G_Sport_Blackred";
+_player addVest "V_BandollierB_oli";
+_player addItemToVest "HandGrenade";
+//_player addItemToVest "O_IR_Grenade";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addBackpack "B_TacticalPack_rgr";
+_player addItemToBackpack "Medikit";
+//_player addItemToBackpack "FirstAidKit";
+_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "HandGrenade";
+_player addItemToBackpack "RPG32_HE_F";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+_player addItemToBackpack "30Rnd_556x45_Stanag";
+_player addItemToBackpack "30Rnd_556x45_Stanag";
+_player addItemToBackpack "30Rnd_556x45_Stanag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+
+// "Add weapons";
+_player addWeapon "arifle_TRG21_F";
+_player addWeapon "launch_RPG32_F";
+_player addPrimaryWeaponItem "muzzle_snds_M";
+//_player addPrimaryWeaponItem "acc_flashlight";
+_player addPrimaryWeaponItem "optic_Holosight_smg";
+_player addWeapon "hgun_Pistol_heavy_01_MRD_F";
+_player addHandgunItem "muzzle_snds_acp";
+
+// "Add items";
+//_player addItem "ItemMap";
+//_player addItem "ItemCompass";
+//_player addItem "ItemWatch";
+_player addItem "ItemGPS";
+_player addItem "Rangefinder";
+};
+
+//Player Level 8
+if ((getPlayerUID _player) in [""]) then { 
+// "Remove existing items";
+removeAllWeapons _player;
+//removeAllItems _player;
+//removeAllAssignedItems _player;
+//removeUniform _player;
+//removeVest _player;
+removeBackpack _player;
+removeHeadgear _player;
+removeGoggles _player;
+
+// "Add containers";
+//_player forceAddUniform "U_B_CombatUniform_mcam_tshirt";
+//_player addItemToUniform "FirstAidKit";
+_player addHeadgear "H_HelmetB";
+//_player addGoggles "G_Sport_Blackred";
+_player addVest "V_TacVest_oli";
+_player addItemToVest "HandGrenade";
+//_player addItemToVest "O_IR_Grenade";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addBackpack "B_Kitbag_cbr";
+_player addItemToBackpack "Medikit";
+//_player addItemToBackpack "FirstAidKit";
+_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "HandGrenade";
+_player addItemToBackpack "RPG32_HE_F";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+_player addItemToBackpack "30Rnd_65x39_caseless_mag";
+_player addItemToBackpack "30Rnd_65x39_caseless_mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+
+// "Add weapons";
+_player addWeapon "arifle_MXC_Black_F";
+_player addWeapon "launch_RPG32_F";
+//_player addPrimaryWeaponItem "muzzle_snds_M";
+//_player addPrimaryWeaponItem "acc_flashlight";
+_player addPrimaryWeaponItem "optic_Holosight_smg";
+_player addWeapon "hgun_Pistol_heavy_01_MRD_F";
+_player addHandgunItem "muzzle_snds_acp";
+
+// "Add items";
+//_player addItem "ItemMap";
+//_player addItem "ItemCompass";
+//_player addItem "ItemWatch";
+_player addItem "ItemGPS";
+_player addItem "Rangefinder";
+};
+
+//Player Level 9
+if ((getPlayerUID _player) in [""]) then { 
+// "Remove existing items";
+removeAllWeapons _player;
+//removeAllItems _player;
+//removeAllAssignedItems _player;
+//removeUniform _player;
+//removeVest _player;
+removeBackpack _player;
+removeHeadgear _player;
+removeGoggles _player;
+
+// "Add containers";
+//_player forceAddUniform "U_B_CombatUniform_mcam_tshirt";
+//_player addItemToUniform "FirstAidKit";
+_player addHeadgear "H_HelmetB";
+//_player addGoggles "G_Sport_Blackred";
+_player addVest "V_TacVest_oli";
+_player addItemToVest "HandGrenade";
+//_player addItemToVest "O_IR_Grenade";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addBackpack "B_Kitbag_cbr";
+_player addItemToBackpack "Medikit";
+//_player addItemToBackpack "FirstAidKit";
+_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "HandGrenade";
+_player addItemToBackpack "RPG32_F";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+_player addItemToBackpack "30Rnd_65x39_caseless_green";
+_player addItemToBackpack "30Rnd_65x39_caseless_green";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+
+// "Add weapons";
+_player addWeapon "arifle_Katiba_F";
+_player addWeapon "launch_RPG32_F";
+//_player addPrimaryWeaponItem "muzzle_snds_M";
+//_player addPrimaryWeaponItem "acc_flashlight";
+_player addPrimaryWeaponItem "optic_Holosight_smg";
+_player addWeapon "hgun_Pistol_heavy_01_MRD_F";
+_player addHandgunItem "muzzle_snds_acp";
+
+// "Add items";
+//_player addItem "ItemMap";
+//_player addItem "ItemCompass";
+//_player addItem "ItemWatch";
+_player addItem "ItemGPS";
+_player addItem "Rangefinder";
+};
+
+//Player Level 10
+if ((getPlayerUID _player) in [""]) then { 
+// "Remove existing items";
+removeAllWeapons _player;
+//removeAllItems _player;
+//removeAllAssignedItems _player;
+//removeUniform _player;
+//removeVest _player;
+removeBackpack _player;
+removeHeadgear _player;
+removeGoggles _player;
+
+// "Add containers";
+//_player forceAddUniform "U_B_CombatUniform_mcam_tshirt";
+//_player addItemToUniform "FirstAidKit";
+_player addHeadgear "H_HelmetB";
+//_player addGoggles "G_Sport_Blackred";
+_player addVest "V_TacVest_oli";
+_player addItemToVest "HandGrenade";
+//_player addItemToVest "O_IR_Grenade";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addBackpack "B_Kitbag_cbr";
+_player addItemToBackpack "Medikit";
+//_player addItemToBackpack "FirstAidKit";
+_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "HandGrenade";
+_player addItemToBackpack "RPG32_F";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+_player addItemToBackpack "30Rnd_65x39_caseless_green";
+_player addItemToBackpack "30Rnd_65x39_caseless_green";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+
+// "Add weapons";
+_player addWeapon "arifle_MXM_F";
+_player addWeapon "launch_RPG32_F";
+//_player addPrimaryWeaponItem "muzzle_snds_M";
+//_player addPrimaryWeaponItem "acc_flashlight";
+_player addPrimaryWeaponItem "optic_Hamr";
+_player addWeapon "hgun_Pistol_heavy_01_MRD_F";
+_player addHandgunItem "muzzle_snds_acp";
+
+// "Add items";
+//_player addItem "ItemMap";
+//_player addItem "ItemCompass";
+//_player addItem "ItemWatch";
+_player addItem "ItemGPS";
+_player addItem "Rangefinder";
+};
+
+//Player Level 11
+if ((getPlayerUID _player) in [""]) then { 
+// "Remove existing items";
+removeAllWeapons _player;
+//removeAllItems _player;
+//removeAllAssignedItems _player;
+//removeUniform _player;
+//removeVest _player;
+removeBackpack _player;
+removeHeadgear _player;
+removeGoggles _player;
+
+// "Add containers";
+//_player forceAddUniform "U_B_CombatUniform_mcam_tshirt";
+//_player addItemToUniform "FirstAidKit";
+_player addHeadgear "H_HelmetB";
+//_player addGoggles "G_Sport_Blackred";
+_player addVest "V_TacVest_oli";
+_player addItemToVest "HandGrenade";
+//_player addItemToVest "O_IR_Grenade";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+//_player addItemToVest "20Rnd_762x51_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addItemToVest "11Rnd_45ACP_Mag";
+_player addBackpack "B_Kitbag_cbr";
+_player addItemToBackpack "Medikit";
+//_player addItemToBackpack "FirstAidKit";
+_player addItemToBackpack "HandGrenade";
+//_player addItemToBackpack "HandGrenade";
+_player addItemToBackpack "RPG32_F";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+//_player addItemToBackpack "20Rnd_762x51_Mag";
+_player addItemToBackpack "10Rnd_762x54_Mag";
+_player addItemToBackpack "10Rnd_762x54_Mag";
+_player addItemToBackpack "10Rnd_762x54_Mag";
+_player addItemToBackpack "10Rnd_762x54_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+//_player addItemToBackpack "11Rnd_45ACP_Mag";
+
+// "Add weapons";
+_player addWeapon "srifle_DMR_01_F";
+_player addWeapon "launch_RPG32_F";
+//_player addPrimaryWeaponItem "muzzle_snds_M";
+//_player addPrimaryWeaponItem "acc_flashlight";
+_player addPrimaryWeaponItem "optic_Hamr";
+_player addWeapon "hgun_Pistol_heavy_01_MRD_F";
+_player addHandgunItem "muzzle_snds_acp";
+
+// "Add items";
+//_player addItem "ItemMap";
+//_player addItem "ItemCompass";
+//_player addItem "ItemWatch";
+_player addItem "ItemGPS";
+_player addItem "Rangefinder";
+
+};
+*/
